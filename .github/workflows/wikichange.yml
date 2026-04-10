@@ -1,0 +1,14 @@
+name: Monitor Wiki Changes
+
+on:
+  gollum:
+
+jobs:
+  log-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mostrar mudanças
+        run: |
+          echo "Páginas alteradas:"
+          echo "${{ toJson(github.event.pages) }}"
