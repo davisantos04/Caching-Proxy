@@ -1,10 +1,18 @@
 import express, { json, Request, Response } from "express";
+import rateLimit from "express-rate-limit";
 import { redisClient } from "./utils/redisClient";
 import { apiGetter } from "./utils/api-getter";
 
 let base_url: string;
 
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
+app.use(limiter);
 
 app.get("*", async (req, res) => {
   const route = base_url + req.path;
